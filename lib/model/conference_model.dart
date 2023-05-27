@@ -5,7 +5,7 @@ class ConferenceModel {
   final String name;
   final DateTime dateTime;
   final String desc;
-  final String posterPath;
+  final String? posterPath;
   final UserModel presenter;
 
   ConferenceModel({
@@ -13,7 +13,7 @@ class ConferenceModel {
     required this.name,
     required this.dateTime,
     required this.desc,
-    required this.posterPath,
+    this.posterPath,
     required this.presenter,
   });
 

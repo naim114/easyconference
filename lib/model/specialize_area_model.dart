@@ -9,7 +9,7 @@ class SpecializeAreaModel {
 
   @override
   String toString() {
-    return 'SpecializeAreaModel(id: $id,area: $area)';
+    return 'SpecializeAreaModel(id: $id, area: $area)';
   }
 
   Map<String, dynamic> toMap() {
@@ -17,5 +17,12 @@ class SpecializeAreaModel {
       'id': id,
       'area': area,
     };
+  }
+
+  factory SpecializeAreaModel.fromJson(Map<String, dynamic> map) {
+    return SpecializeAreaModel(
+      id: map['id'],
+      area: map['area'],
+    );
   }
 }
