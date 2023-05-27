@@ -2,9 +2,11 @@ import 'package:convex_bottom_bar/convex_bottom_bar.dart';
 import 'package:easyconference/module/account/index.dart';
 import 'package:easyconference/module/presenter/index.dart';
 import 'package:easyconference/module/profile/index.dart';
+import 'package:easyconference/service/auth_service.dart';
 import 'package:easyconference/service/helpers.dart';
 import 'package:flutter/material.dart';
 
+import 'auth/wrapper.dart';
 import 'conference/index.dart';
 
 class Frame extends StatefulWidget {
@@ -58,7 +60,21 @@ class _FrameState extends State<Frame> {
                 'Logout',
                 style: TextStyle(color: CustomColor.danger),
               ),
-              onTap: () {},
+              onTap: () async {
+                final logout = await AuthService().logOut();
+
+                print("logout: $logout");
+
+                if (context.mounted) {
+                  Navigator.pushAndRemoveUntil(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const AuthWrapper(),
+                    ),
+                    (route) => false,
+                  );
+                }
+              },
             ),
           ],
         ),

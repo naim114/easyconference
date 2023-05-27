@@ -1,9 +1,10 @@
-import 'package:easyconference/model/specialize_area_model.dart';
 import 'package:easyconference/module/auth/index.dart';
-import 'package:easyconference/service/seeders.dart';
+import 'package:easyconference/module/frame.dart';
+import 'package:easyconference/service/auth_service.dart';
 import 'package:easyconference/widget/scaffold_loader.dart';
 import 'package:flutter/material.dart';
 
+import '../../model/user_model.dart';
 import '../../service/db_service.dart';
 import '../../service/specialize_area_service.dart';
 import '../../service/user_service.dart';
@@ -37,33 +38,19 @@ class _AuthWrapperState extends State<AuthWrapper> {
   @override
   Widget build(BuildContext context) {
     // TODO check if user logged in
-    return FutureBuilder(
-      future: Future.wait([
-        SpecializeAreaService().getAll(),
-        UserService().getAll(),
-      ]),
+    return FutureBuilder<UserModel?>(
+      future: AuthService().getLoggedIn(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return scaffoldLoader();
         }
 
-        print("all special: ${snapshot.data![0]}");
-        print("all user: ${snapshot.data![1]}");
+        UserModel? user = snapshot.data;
 
-        if (snapshot.data![0].isEmpty) {
-          seed(snapshot.data![1].isEmpty);
-        }
+        print("logged in: $user");
 
-        return const AuthIndex();
+        return user == null ? const AuthIndex() : const Frame();
       },
     );
-  }
-
-  void seed(bool userEmpty) async {
-    await specializeAreaSeeder().then((value) async {
-      if (userEmpty) {
-        await userSeeders();
-      }
-    });
   }
 }

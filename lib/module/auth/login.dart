@@ -1,5 +1,6 @@
 import 'package:easyconference/module/auth/sign_up.dart';
-import 'package:easyconference/module/frame.dart';
+import 'package:easyconference/module/auth/wrapper.dart';
+import 'package:easyconference/service/auth_service.dart';
 import 'package:easyconference/service/helpers.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -80,16 +81,28 @@ class _LoginState extends State<Login> {
             ),
           ),
           ElevatedButton(
-            onPressed: () {
+            onPressed: () async {
               if (validate()) {
-                Navigator.pushAndRemoveUntil(
-                  context,
-                  PageTransition(
-                    type: PageTransitionType.bottomToTop,
-                    child: const Frame(),
-                  ),
-                  (route) => false,
+                final result = await AuthService().logIn(
+                  username: usernameController.text,
+                  password: passwordController.text,
                 );
+
+                print("Log In: $result");
+
+                if (result) {
+                  if (context.mounted) {
+                    Navigator.pushAndRemoveUntil(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const AuthWrapper(),
+                      ),
+                      (route) => false,
+                    );
+                  }
+                } else {
+                  Fluttertoast.showToast(msg: "Username or Password wrong.");
+                }
               }
             },
             style: ButtonStyle(
