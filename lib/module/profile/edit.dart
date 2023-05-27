@@ -17,7 +17,7 @@ class _ProfileEditState extends State<ProfileEdit> {
   final phoneController = TextEditingController();
 
   String roleDropdownValue = roles.first;
-  String expertiseDropdownValue = expertise.first;
+  String specializeDropdownValue = specialize.first;
 
   @override
   void dispose() {
@@ -172,12 +172,12 @@ class _ProfileEditState extends State<ProfileEdit> {
                     controller: null, // TODO
                   ),
                 ),
-                // Expertise
+                // Specialize
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 8.0),
                   child: TextFormField(
-                    initialValue: "RoExpertisele here",
-                    decoration: const InputDecoration(labelText: 'Expertise'),
+                    initialValue: "specialize here",
+                    decoration: const InputDecoration(labelText: 'specialize'),
                     controller: null, // TODO
                   ),
                 ),

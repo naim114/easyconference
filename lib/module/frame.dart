@@ -2,11 +2,10 @@ import 'package:convex_bottom_bar/convex_bottom_bar.dart';
 import 'package:easyconference/module/account/index.dart';
 import 'package:easyconference/module/presenter/index.dart';
 import 'package:easyconference/module/profile/index.dart';
-import 'package:easyconference/module/session/index.dart';
 import 'package:easyconference/service/helpers.dart';
 import 'package:flutter/material.dart';
 
-import 'home/index.dart';
+import 'conference/index.dart';
 
 class Frame extends StatefulWidget {
   const Frame({super.key});
@@ -73,9 +72,6 @@ class _FrameState extends State<Frame> {
               title = "Presenter List";
               break;
             case 1:
-              title = "Home";
-              break;
-            case 2:
               title = "Session List";
               break;
             default:
@@ -92,15 +88,11 @@ class _FrameState extends State<Frame> {
             title: 'Presenters',
           ),
           TabItem(
-            icon: Icons.home,
-            title: 'Home',
-          ),
-          TabItem(
             icon: Icons.calendar_month,
             title: 'Sessions',
           ),
         ],
-        initialActiveIndex: 1,
+        initialActiveIndex: 0,
         onTap: (int i) => setState(() => _selectedIndex = i),
       ),
     );
@@ -114,8 +106,7 @@ class _FrameState extends State<Frame> {
       Presenter(
         mainContext: context,
       ),
-      Home(),
-      Session(
+      Conference(
         mainContext: context,
       ),
     ];

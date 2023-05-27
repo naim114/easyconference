@@ -1,5 +1,6 @@
-import 'package:easyconference/module/session/view.dart';
 import 'package:flutter/material.dart';
+
+import '../conference/view.dart';
 
 class PresenterView extends StatelessWidget {
   const PresenterView({super.key});
@@ -43,7 +44,7 @@ class PresenterView extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  "Expertise",
+                  "Specialize",
                   style: TextStyle(
                     fontSize: 18,
                   ),
@@ -55,7 +56,7 @@ class PresenterView extends StatelessWidget {
           const Divider(),
           InkWell(
             onTap: () => Navigator.of(context).push(MaterialPageRoute(
-              builder: (context) => SessionView(),
+              builder: (context) => ConferenceView(),
             )),
             child: ListTile(
               title: Text(

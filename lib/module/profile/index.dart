@@ -76,12 +76,12 @@ class Profile extends StatelessWidget {
                     readOnly: true,
                   ),
                 ),
-                // Expertise
+                // Specialize
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 8.0),
                   child: TextFormField(
-                    initialValue: "RoExpertisele here",
-                    decoration: const InputDecoration(labelText: 'Expertise'),
+                    initialValue: "specialize here",
+                    decoration: const InputDecoration(labelText: 'Specialize'),
                     readOnly: true,
                   ),
                 ),

@@ -30,7 +30,7 @@ class Presenter extends StatelessWidget {
                 "Presenter Name",
                 style: const TextStyle(fontWeight: FontWeight.bold),
               ),
-              subtitle: Text("Expertise"),
+              subtitle: Text("Specialize"),
             ),
           ),
         ],

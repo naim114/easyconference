@@ -4,17 +4,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_cupertino_datetime_picker/flutter_cupertino_datetime_picker.dart';
 import 'package:intl/intl.dart';
 
-class SessionEdit extends StatefulWidget {
-  const SessionEdit({super.key});
+class ConferenceEdit extends StatefulWidget {
+  const ConferenceEdit({super.key});
 
   @override
-  State<SessionEdit> createState() => _SessionEditState();
+  State<ConferenceEdit> createState() => _ConferenceEditState();
 }
 
 // TODO change this to user presenter list
 List<String> presenters = <String>['One', 'Two', 'Three', 'Four'];
 
-class _SessionEditState extends State<SessionEdit> {
+class _ConferenceEditState extends State<ConferenceEdit> {
   final nameController = TextEditingController();
   final dateTimeController = TextEditingController();
   final descController = TextEditingController();

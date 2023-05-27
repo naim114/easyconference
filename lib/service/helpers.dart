@@ -18,7 +18,7 @@ const List<String> roles = <String>[
   'Judges',
 ];
 
-const List<String> expertise = [
+const List<String> specialize = [
   'Artificial Intelligence',
   'Data Mining',
   'Computer Security',

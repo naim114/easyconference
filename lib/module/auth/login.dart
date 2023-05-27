@@ -48,98 +48,96 @@ class _LoginState extends State<Login> {
       appBar: AppBar(
         elevation: 0,
       ),
-      body: Padding(
+      body: ListView(
         padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 30),
-        child: ListView(
-          children: [
-            const Padding(
-              padding: EdgeInsets.only(bottom: 30.0),
-              child: Text(
-                "Log in",
-                style: TextStyle(
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold,
-                ),
-                textAlign: TextAlign.center,
+        children: [
+          const Padding(
+            padding: EdgeInsets.only(bottom: 30.0),
+            child: Text(
+              "Log in",
+              style: TextStyle(
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
               ),
+              textAlign: TextAlign.center,
             ),
-            Padding(
-              padding: const EdgeInsets.only(bottom: 10),
-              child: CustomTextField(
-                controller: usernameController,
-                icon: const Icon(CupertinoIcons.at),
-                labelText: 'Username',
-              ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(bottom: 10),
+            child: CustomTextField(
+              controller: usernameController,
+              icon: const Icon(CupertinoIcons.at),
+              labelText: 'Username',
             ),
-            Padding(
-              padding: const EdgeInsets.only(top: 10, bottom: 20),
-              child: CustomTextField(
-                controller: passwordController,
-                icon: const Icon(CupertinoIcons.padlock),
-                labelText: 'Password',
-                isPassword: true,
-              ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(top: 10, bottom: 20),
+            child: CustomTextField(
+              controller: passwordController,
+              icon: const Icon(CupertinoIcons.padlock),
+              labelText: 'Password',
+              isPassword: true,
             ),
-            ElevatedButton(
-              onPressed: () {
-                if (validate()) {
-                  Navigator.pushAndRemoveUntil(
-                    context,
-                    PageTransition(
-                      type: PageTransitionType.bottomToTop,
-                      child: const Frame(),
-                    ),
-                    (route) => false,
-                  );
-                }
-              },
-              style: ButtonStyle(
-                shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                  RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(15.0),
-                  ),
-                ),
-                minimumSize: MaterialStateProperty.all(const Size(
-                  double.infinity,
-                  55,
-                )),
-                backgroundColor:
-                    MaterialStateProperty.all<Color>(CustomColor.primary),
-              ),
-              child: const Text(
-                "Submit",
-                style: TextStyle(color: Colors.white),
-              ),
-            ),
-            TextButton(
-              onPressed: () {
-                Navigator.pop(context);
-                Navigator.push(
+          ),
+          ElevatedButton(
+            onPressed: () {
+              if (validate()) {
+                Navigator.pushAndRemoveUntil(
                   context,
                   PageTransition(
-                    type: PageTransitionType.leftToRight,
-                    child: const SignUp(),
+                    type: PageTransitionType.bottomToTop,
+                    child: const Frame(),
                   ),
+                  (route) => false,
                 );
-              },
-              child: const Text.rich(
-                TextSpan(
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                  children: [
-                    TextSpan(
-                      text: 'Don\'t have an account? ',
-                      style: TextStyle(color: CustomColor.neutral2),
-                    ),
-                    TextSpan(
-                      text: 'Sign Up',
-                      style: TextStyle(color: CustomColor.primary),
-                    ),
-                  ],
+              }
+            },
+            style: ButtonStyle(
+              shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(15.0),
                 ),
               ),
+              minimumSize: MaterialStateProperty.all(const Size(
+                double.infinity,
+                55,
+              )),
+              backgroundColor:
+                  MaterialStateProperty.all<Color>(CustomColor.primary),
             ),
-          ],
-        ),
+            child: const Text(
+              "Submit",
+              style: TextStyle(color: Colors.white),
+            ),
+          ),
+          TextButton(
+            onPressed: () {
+              Navigator.pop(context);
+              Navigator.push(
+                context,
+                PageTransition(
+                  type: PageTransitionType.leftToRight,
+                  child: const SignUp(),
+                ),
+              );
+            },
+            child: const Text.rich(
+              TextSpan(
+                style: TextStyle(fontWeight: FontWeight.bold),
+                children: [
+                  TextSpan(
+                    text: 'Don\'t have an account? ',
+                    style: TextStyle(color: CustomColor.neutral2),
+                  ),
+                  TextSpan(
+                    text: 'Sign Up',
+                    style: TextStyle(color: CustomColor.primary),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }

@@ -1,22 +1,33 @@
-import 'package:easyconference/module/session/view.dart';
+import 'package:easyconference/module/conference/edit.dart';
+import 'package:easyconference/module/conference/view.dart';
 import 'package:flutter/material.dart';
 
 import '../../service/helpers.dart';
 
-class Session extends StatelessWidget {
-  const Session({super.key, required this.mainContext});
+class Conference extends StatelessWidget {
+  const Conference({super.key, required this.mainContext});
   final BuildContext mainContext;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (context) => ConferenceEdit(),
+            ),
+          );
+        },
+        child: Icon(Icons.add),
+      ),
       body: ListView(
         children: [
           InkWell(
             onTap: () {
               Navigator.of(mainContext).push(
                 MaterialPageRoute(
-                  builder: (context) => SessionView(),
+                  builder: (context) => ConferenceView(),
                 ),
               );
             },

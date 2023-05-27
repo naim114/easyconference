@@ -1,11 +1,11 @@
-import 'package:easyconference/module/session/edit.dart';
+import 'package:easyconference/module/conference/edit.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../../service/helpers.dart';
 
-class SessionView extends StatelessWidget {
-  const SessionView({super.key});
+class ConferenceView extends StatelessWidget {
+  const ConferenceView({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +15,7 @@ class SessionView extends StatelessWidget {
           IconButton(
             onPressed: () => Navigator.of(context).push(
               MaterialPageRoute(
-                builder: (context) => SessionEdit(),
+                builder: (context) => ConferenceEdit(),
               ),
             ),
             icon: const Icon(Icons.edit),
@@ -106,9 +106,9 @@ class SessionView extends StatelessWidget {
                   TextSpan(
                     children: [
                       TextSpan(
-                          text: "Expertise: ",
+                          text: "Specialize: ",
                           style: TextStyle(fontWeight: FontWeight.bold)),
-                      TextSpan(text: "Expertise"),
+                      TextSpan(text: "Specialize"),
                     ],
                   ),
                 ),
