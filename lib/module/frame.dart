@@ -15,7 +15,7 @@ class Frame extends StatefulWidget {
 }
 
 class _FrameState extends State<Frame> {
-  int _selectedIndex = 1;
+  int _selectedIndex = 0;
 
   @override
   Widget build(BuildContext context) {
