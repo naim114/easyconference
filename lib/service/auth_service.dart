@@ -23,30 +23,38 @@ class AuthService {
     required String username,
     required String password,
   }) async {
+    print("username: $username");
+    print("password: $password");
+
     try {
+      List<UserModel> matchedUser = List.empty(growable: true);
       final allUsers = await UserService().getAll();
 
-      // UserModel? logIn;
-
       for (var user in allUsers) {
+        print("user: $user");
+
+        print("user.username: ${user.username}");
         if (user.username == username) {
+          print("user.password: ${user.password}");
           if (user.password == password) {
-            // insert to db
-            final db = await DBService.instance.database;
-            final result = await db.insert(table, {'user': user.id});
-            print('Log In: $result');
-            print('User Log In: $logIn');
-
-            return true;
+            print('match user: $user');
+            matchedUser.add(user);
           }
-
-          return false;
-        } else {
-          return false;
         }
       }
 
-      return false;
+      if (matchedUser.isEmpty) {
+        return false;
+      } else {
+        // insert to db
+        final db = await DBService.instance.database;
+        final result = await db.insert(table, {'user': matchedUser.first.id});
+
+        print('Log In: $result');
+        print('User Log In: $logIn');
+
+        return true;
+      }
     } catch (e) {
       print(e.toString());
       return false;

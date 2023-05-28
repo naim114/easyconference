@@ -66,18 +66,18 @@ class _MyAppState extends State<MyApp> {
             return scaffoldLoader();
           }
 
-          print("all special: ${snapshot.data![0]}");
+          // print("all special: ${snapshot.data![0]}");
           // print("all user: ${snapshot.data![1]}");
 
-          print("all user;");
-          for (UserModel user in snapshot.data![1] as List<UserModel>) {
-            print(
-                "username: ${user.id}, specializeArea: ${user.specializeArea?.area}\n");
-          }
+          // print("all user;");
+          // for (UserModel user in snapshot.data![1] as List<UserModel>) {
+          //   print(
+          //       "username: ${user.username}, specializeArea: ${user.specializeArea?.area}\n");
+          // }
 
-          if (snapshot.data![0].isEmpty) {
-            seed(snapshot.data![1].isEmpty);
-          }
+          // if (snapshot.data![0].isEmpty) {
+          //   seed(snapshot.data![1].isEmpty);
+          // }
 
           return const AuthWrapper();
         },

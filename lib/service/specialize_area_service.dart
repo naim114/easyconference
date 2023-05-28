@@ -11,8 +11,6 @@ class SpecializeAreaService {
 
     final result = await db.query(table);
 
-    print("result: $result");
-
     return result.map((json) => SpecializeAreaModel.fromJson(json)).toList();
   }
 

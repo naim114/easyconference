@@ -28,8 +28,6 @@ class UserService {
 
     final result = await db.query(table);
 
-    print("result: $result");
-
     final futures = result.map((json) => UserService().fromJson(json));
 
     return Future.wait(futures.toList());
