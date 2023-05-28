@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:easyconference/model/user_model.dart';
 import 'package:easyconference/module/profile/edit.dart';
 import 'package:easyconference/service/user_service.dart';
@@ -64,20 +66,31 @@ class _ProfileState extends State<Profile> {
               body: ListView(
                 children: [
                   // Avatar // TODO change this to user image
-                  SizedBox(
-                    width: MediaQuery.of(context).size.height * 0.17,
-                    child: Container(
-                      height: MediaQuery.of(context).size.height * 0.17,
-                      width: MediaQuery.of(context).size.height * 0.17,
-                      decoration: const BoxDecoration(
-                        shape: BoxShape.circle,
-                        image: DecorationImage(
-                            image: AssetImage(
-                                'assets/image/default-profile-picture.png'),
-                            fit: BoxFit.contain),
-                      ),
-                    ),
-                  ),
+                  userState!.avatarPath == null
+                      ? Container(
+                          height: MediaQuery.of(context).size.height * 0.17,
+                          width: MediaQuery.of(context).size.height * 0.17,
+                          decoration: const BoxDecoration(
+                            shape: BoxShape.circle,
+                            image: DecorationImage(
+                              image: AssetImage(
+                                  'assets/image/default-profile-picture.png'),
+                              fit: BoxFit.contain,
+                            ),
+                          ),
+                        )
+                      : Container(
+                          height: MediaQuery.of(context).size.height * 0.17,
+                          width: MediaQuery.of(context).size.height * 0.17,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            image: DecorationImage(
+                              image: MemoryImage(
+                                  base64Decode(userState!.avatarPath!)),
+                              fit: BoxFit.contain,
+                            ),
+                          ),
+                        ),
                   // Details
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 30.0),

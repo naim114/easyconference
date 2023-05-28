@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -9,6 +11,7 @@ import '../../model/user_model.dart';
 import '../../service/helpers.dart';
 import '../../service/specialize_area_service.dart';
 import '../../service/user_service.dart';
+import '../../widget/image_uploader.dart';
 
 class ProfileEdit extends StatefulWidget {
   const ProfileEdit({super.key, required this.user});
@@ -144,7 +147,31 @@ class _ProfileEditState extends State<ProfileEdit> {
                       ListTile(
                         leading: const Icon(Icons.image_outlined),
                         title: const Text('New avatar'),
-                        onTap: () {},
+                        onTap: () => Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) => ImageUploader(
+                              appBarTitle: "Upload New Avatar",
+                              onCancel: () => Navigator.of(context).pop(),
+                              onConfirm: (imageFile, _) async {
+                                final result = await UserService().updateAvatar(
+                                  user: widget.user,
+                                  avatar: imageToBytes(imageFile),
+                                );
+
+                                if (result) {
+                                  if (context.mounted) {
+                                    Navigator.pop(context);
+                                    Navigator.pop(context);
+                                    Navigator.pop(context);
+                                    Fluttertoast.showToast(
+                                        msg:
+                                            "Avatar update. Refresh if there is no changes.");
+                                  }
+                                }
+                              },
+                            ),
+                          ),
+                        ),
                       ),
                       ListTile(
                         leading: const Icon(
@@ -173,7 +200,28 @@ class _ProfileEditState extends State<ProfileEdit> {
                                 ),
                               ),
                               TextButton(
-                                onPressed: () {},
+                                onPressed: () async {
+                                  if (widget.user.avatarPath == null) {
+                                    Navigator.pop(context);
+                                    Navigator.pop(context);
+                                    Fluttertoast.showToast(
+                                        msg: "There is no previous avatar");
+                                  } else {
+                                    final result = await UserService()
+                                        .removeAvatar(user: widget.user);
+
+                                    print("Remove avatar: $result");
+
+                                    if (result && context.mounted) {
+                                      Navigator.pop(context);
+                                      Navigator.pop(context);
+                                      Navigator.pop(context);
+                                      Fluttertoast.showToast(
+                                          msg:
+                                              "Avatar removed. Refresh if there is no changes.");
+                                    }
+                                  }
+                                },
                                 child: const Text(
                                   'OK',
                                   style: TextStyle(color: CustomColor.danger),
@@ -188,34 +236,41 @@ class _ProfileEditState extends State<ProfileEdit> {
                 },
               );
             },
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                SizedBox(
-                  width: MediaQuery.of(context).size.height * 0.17,
-                  child: Container(
+            child: widget.user.avatarPath == null
+                ? Container(
                     height: MediaQuery.of(context).size.height * 0.17,
                     width: MediaQuery.of(context).size.height * 0.17,
                     decoration: const BoxDecoration(
                       shape: BoxShape.circle,
                       image: DecorationImage(
-                          image: AssetImage(
-                              'assets/image/default-profile-picture.png'),
-                          fit: BoxFit.cover),
+                        image: AssetImage(
+                            'assets/image/default-profile-picture.png'),
+                        fit: BoxFit.contain,
+                      ),
+                    ),
+                  )
+                : Container(
+                    height: MediaQuery.of(context).size.height * 0.17,
+                    width: MediaQuery.of(context).size.height * 0.17,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      image: DecorationImage(
+                        image:
+                            MemoryImage(base64Decode(widget.user.avatarPath!)),
+                        fit: BoxFit.contain,
+                      ),
                     ),
                   ),
-                ),
-                const Padding(
-                  padding: EdgeInsets.symmetric(vertical: 10.0),
-                  child: Text(
-                    'Tap Image to Edit Avatar',
-                    style: TextStyle(
-                      color: CustomColor.primary,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
-              ],
+          ),
+          const Padding(
+            padding: EdgeInsets.symmetric(vertical: 10.0),
+            child: Text(
+              'Tap Image to Edit Avatar',
+              style: TextStyle(
+                color: CustomColor.primary,
+                fontWeight: FontWeight.bold,
+              ),
+              textAlign: TextAlign.center,
             ),
           ),
           // Details

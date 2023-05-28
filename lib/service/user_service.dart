@@ -1,3 +1,6 @@
+import 'dart:convert';
+import 'dart:typed_data';
+
 import 'package:easyconference/model/specialize_area_model.dart';
 import 'package:easyconference/model/user_model.dart';
 import 'package:easyconference/service/db_service.dart';
@@ -125,7 +128,69 @@ class UserService {
       return false;
     }
   }
-}
 
-// TODO update username n password 
-// TODO update profile
+  Future updateAuth({
+    required UserModel user,
+    required String newUsername,
+    required String newPassword,
+  }) async {
+    try {
+      final db = await DBService.instance.database;
+      db.update(
+        table,
+        {
+          'username': newUsername,
+          'password': newPassword,
+        },
+        where: 'id = ?',
+        whereArgs: [user.id],
+      );
+
+      return true;
+    } catch (e) {
+      print(e.toString());
+      return false;
+    }
+  }
+
+  Future<bool> updateAvatar({
+    required UserModel user,
+    required Uint8List avatar,
+  }) async {
+    try {
+      final db = await DBService.instance.database;
+      db.update(
+        table,
+        {
+          'avatarPath': base64Encode(avatar),
+        },
+        where: 'id = ?',
+        whereArgs: [user.id],
+      );
+
+      return true;
+    } catch (e) {
+      print(e.toString());
+      return false;
+    }
+  }
+
+  Future<bool> removeAvatar({required UserModel user}) async {
+    try {
+      final db = await DBService.instance.database;
+      db.update(
+        table,
+        {
+          'avatarPath': null,
+        },
+        where: 'id = ?',
+        whereArgs: [user.id],
+      );
+
+      return true;
+    } catch (e) {
+      print(e.toString());
+      return false;
+    }
+  }
+}

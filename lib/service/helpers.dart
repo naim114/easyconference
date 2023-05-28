@@ -1,3 +1,5 @@
+import 'dart:io';
+import 'dart:typed_data';
 import 'dart:ui';
 
 class CustomColor {
@@ -25,3 +27,14 @@ const List<String> specialize = [
   'Internet of Things',
   'Software Engineering',
 ];
+
+Uint8List imageToBytes(File imageFile) {
+  final bytes = imageFile.readAsBytesSync();
+  return Uint8List.fromList(bytes);
+}
+
+File bytesToImage(Uint8List imageBytes, String filePath) {
+  final file = File(filePath);
+  file.writeAsBytesSync(imageBytes);
+  return file;
+}
