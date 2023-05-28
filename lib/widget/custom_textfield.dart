@@ -1,6 +1,7 @@
 import 'package:easyconference/service/helpers.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class CustomTextField extends StatefulWidget {
   const CustomTextField({
@@ -10,6 +11,7 @@ class CustomTextField extends StatefulWidget {
     this.isPassword = false,
     this.controller,
     this.errorText,
+    this.inputFormatters,
   });
 
   final Icon icon;
@@ -17,7 +19,7 @@ class CustomTextField extends StatefulWidget {
   final bool isPassword;
   final TextEditingController? controller;
   final String? errorText;
-
+  final List<TextInputFormatter>? inputFormatters;
   @override
   State<CustomTextField> createState() => _CustomTextFieldState();
 }
@@ -87,6 +89,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
                 // fillColor: Colors.transparent,
                 // filled: true,
               ),
+              inputFormatters: widget.inputFormatters,
             ),
           );
   }

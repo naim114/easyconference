@@ -19,10 +19,6 @@ class AuthService {
     }
   }
 
-  Future tododelete() async {
-    return true;
-  }
-
   Future<bool> logIn({
     required String username,
     required String password,

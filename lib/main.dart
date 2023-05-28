@@ -1,3 +1,4 @@
+import 'package:easyconference/model/user_model.dart';
 import 'package:easyconference/module/auth/wrapper.dart';
 import 'package:easyconference/service/helpers.dart';
 import 'package:easyconference/service/seeders.dart';
@@ -66,7 +67,13 @@ class _MyAppState extends State<MyApp> {
           }
 
           print("all special: ${snapshot.data![0]}");
-          print("all user: ${snapshot.data![1]}");
+          // print("all user: ${snapshot.data![1]}");
+
+          print("all user;");
+          for (UserModel user in snapshot.data![1] as List<UserModel>) {
+            print(
+                "username: ${user.id}, specializeArea: ${user.specializeArea?.area}\n");
+          }
 
           if (snapshot.data![0].isEmpty) {
             seed(snapshot.data![1].isEmpty);

@@ -1,6 +1,10 @@
+import 'package:easyconference/model/specialize_area_model.dart';
 import 'package:easyconference/module/auth/login.dart';
+import 'package:easyconference/service/specialize_area_service.dart';
+import 'package:easyconference/service/user_service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:page_transition/page_transition.dart';
 
@@ -20,6 +24,7 @@ class _SignUpState extends State<SignUp> {
   final usernameController = TextEditingController();
   final nameController = TextEditingController();
   final phoneController = TextEditingController();
+  final emailController = TextEditingController();
 
   String roleDropdownValue = roles.first;
   String specializeDropdownValue = specialize.first;
@@ -60,6 +65,11 @@ class _SignUpState extends State<SignUp> {
           msg: "Name is empty. Please enter all information.");
 
       return false;
+    } else if (emailController.text.isEmpty) {
+      Fluttertoast.showToast(
+          msg: "Email is empty. Please enter all information.");
+
+      return false;
     }
 
     return true;
@@ -72,8 +82,9 @@ class _SignUpState extends State<SignUp> {
         elevation: 0,
       ),
       body: ListView(
-        padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 30),
+        padding: const EdgeInsets.symmetric(horizontal: 30),
         children: [
+          const SizedBox(height: 30),
           const Padding(
             padding: EdgeInsets.only(bottom: 30.0),
             child: Text(
@@ -105,7 +116,7 @@ class _SignUpState extends State<SignUp> {
           Padding(
             padding: const EdgeInsets.only(top: 10, bottom: 10),
             child: CustomTextField(
-              controller: passwordController,
+              controller: rePasswordController,
               icon: const Icon(CupertinoIcons.padlock),
               labelText: 'Re-enter Password',
               isPassword: true,
@@ -124,10 +135,22 @@ class _SignUpState extends State<SignUp> {
           Padding(
             padding: const EdgeInsets.only(top: 10, bottom: 10),
             child: CustomTextField(
+              controller: emailController,
+              icon: const Icon(CupertinoIcons.mail),
+              labelText: 'Email',
+              isPassword: false,
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(top: 10, bottom: 10),
+            child: CustomTextField(
               controller: phoneController,
               icon: const Icon(CupertinoIcons.phone),
               labelText: 'Phone Number',
               isPassword: false,
+              inputFormatters: <TextInputFormatter>[
+                FilteringTextInputFormatter.digitsOnly
+              ],
             ),
           ),
           Padding(
@@ -195,8 +218,65 @@ class _SignUpState extends State<SignUp> {
               : const SizedBox(),
           const SizedBox(height: 20),
           ElevatedButton(
-            onPressed: () {
-              // TODO
+            onPressed: () async {
+              if (validate()) {
+                var result;
+
+                if (roleDropdownValue == 'Presenter') {
+                  print("is presenter: $specializeDropdownValue");
+                  SpecializeAreaModel? getting = await SpecializeAreaService()
+                      .getByArea(specializeDropdownValue)
+                      .then((specializeArea) async {
+                    print("is presenter2: $specializeArea");
+
+                    final signUp = await UserService().signUp(
+                      name: nameController.text,
+                      email: emailController.text,
+                      phone: phoneController.text,
+                      role: roleDropdownValue,
+                      username: usernameController.text,
+                      password: passwordController.text,
+                      specializeArea: specializeArea,
+                    );
+
+                    print("Sign Up: $signUp");
+
+                    return specializeArea;
+                  });
+
+                  if (getting != null) {
+                    result = true;
+                  }
+                } else {
+                  result = await UserService().signUp(
+                    name: nameController.text,
+                    email: emailController.text,
+                    phone: phoneController.text,
+                    role: roleDropdownValue,
+                    username: usernameController.text,
+                    password: passwordController.text,
+                    specializeArea: null,
+                  );
+                }
+
+                if (result) {
+                  if (context.mounted) {
+                    Navigator.pop(context);
+                    Navigator.push(
+                      context,
+                      PageTransition(
+                        type: PageTransitionType.rightToLeft,
+                        child: const Login(),
+                      ),
+                    );
+                    Fluttertoast.showToast(
+                        msg:
+                            "Sign up success! Please log in first to continue");
+                  }
+                } else {
+                  Fluttertoast.showToast(msg: "Username or Password wrong.");
+                }
+              }
             },
             style: ButtonStyle(
               shape: MaterialStateProperty.all<RoundedRectangleBorder>(
@@ -243,6 +323,7 @@ class _SignUpState extends State<SignUp> {
               ),
             ),
           ),
+          const SizedBox(height: 30),
         ],
       ),
     );

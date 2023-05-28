@@ -70,20 +70,27 @@ Future userSeeders() async {
       ),
     );
 
-    await UserService().insert(
-      user: UserModel(
-        id: 4,
-        name: 'User 4',
-        email: 'user4@email.com',
-        phone: 601234678,
-        role: 'Presenter',
-        username: 'user4',
-        password: 'pass',
-        specializeArea: await SpecializeAreaService().get(1),
-      ),
+    await SpecializeAreaService().get(1).then(
+      (specializeArea) async {
+        print("specializeArea: $specializeArea");
+
+        return await UserService().insert(
+          user: UserModel(
+            id: 4,
+            name: 'User 4',
+            email: 'user4@email.com',
+            phone: 601234678,
+            role: 'Presenter',
+            username: 'user4',
+            password: 'pass',
+            specializeArea: specializeArea,
+          ),
+        );
+      },
     );
 
     print("userSeeders success");
+
     return true;
   } catch (e) {
     print("userSeeders error");
