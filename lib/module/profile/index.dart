@@ -66,7 +66,7 @@ class _ProfileState extends State<Profile> {
               body: ListView(
                 children: [
                   // Avatar // TODO change this to user image
-                  userState!.avatarPath == null
+                  userState!.avatarBytes == null
                       ? Container(
                           height: MediaQuery.of(context).size.height * 0.17,
                           width: MediaQuery.of(context).size.height * 0.17,
@@ -86,7 +86,7 @@ class _ProfileState extends State<Profile> {
                             shape: BoxShape.circle,
                             image: DecorationImage(
                               image: MemoryImage(
-                                  base64Decode(userState!.avatarPath!)),
+                                  base64Decode(userState!.avatarBytes!)),
                               fit: BoxFit.contain,
                             ),
                           ),

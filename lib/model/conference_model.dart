@@ -5,7 +5,7 @@ class ConferenceModel {
   final String name;
   final DateTime dateTime;
   final String desc;
-  final String? posterPath;
+  final String? posterBytes;
   final UserModel presenter;
 
   ConferenceModel({
@@ -13,13 +13,13 @@ class ConferenceModel {
     required this.name,
     required this.dateTime,
     required this.desc,
-    this.posterPath,
+    this.posterBytes,
     required this.presenter,
   });
 
   @override
   String toString() {
-    return 'ConferenceModel(id: $id, name: $name, dateTime: $dateTime, desc: $desc, posterPath: $posterPath, presenter: $presenter)';
+    return 'ConferenceModel(id: $id, name: $name, dateTime: $dateTime, desc: $desc, posterPath: $posterBytes, presenter: $presenter)';
   }
 
   Map<String, dynamic> toMap() {
@@ -28,7 +28,7 @@ class ConferenceModel {
       'name': name,
       'dateTime': dateTime,
       'desc': desc,
-      'posterPath': posterPath,
+      'posterPath': posterBytes,
       'presenter': presenter.id,
     };
   }

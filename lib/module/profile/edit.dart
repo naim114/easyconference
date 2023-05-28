@@ -201,7 +201,7 @@ class _ProfileEditState extends State<ProfileEdit> {
                               ),
                               TextButton(
                                 onPressed: () async {
-                                  if (widget.user.avatarPath == null) {
+                                  if (widget.user.avatarBytes == null) {
                                     Navigator.pop(context);
                                     Navigator.pop(context);
                                     Fluttertoast.showToast(
@@ -236,7 +236,7 @@ class _ProfileEditState extends State<ProfileEdit> {
                 },
               );
             },
-            child: widget.user.avatarPath == null
+            child: widget.user.avatarBytes == null
                 ? Container(
                     height: MediaQuery.of(context).size.height * 0.17,
                     width: MediaQuery.of(context).size.height * 0.17,
@@ -256,7 +256,7 @@ class _ProfileEditState extends State<ProfileEdit> {
                       shape: BoxShape.circle,
                       image: DecorationImage(
                         image:
-                            MemoryImage(base64Decode(widget.user.avatarPath!)),
+                            MemoryImage(base64Decode(widget.user.avatarBytes!)),
                         fit: BoxFit.contain,
                       ),
                     ),

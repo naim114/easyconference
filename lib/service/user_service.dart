@@ -19,7 +19,7 @@ class UserService {
       role: map['role'],
       username: map['username'],
       password: map['password'],
-      avatarPath: map['avatarPath'],
+      avatarBytes: map['avatarPath'],
       specializeArea: map['specializeArea'] == null
           ? null
           : await SpecializeAreaService().get(map['specializeArea']),
