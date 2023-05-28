@@ -1,31 +1,70 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:google_fonts/google_fonts.dart';
 
+import '../../model/specialize_area_model.dart';
+import '../../model/user_model.dart';
 import '../../service/helpers.dart';
+import '../../service/specialize_area_service.dart';
+import '../../service/user_service.dart';
 
 class ProfileEdit extends StatefulWidget {
-  const ProfileEdit({super.key});
+  const ProfileEdit({super.key, required this.user});
+  final UserModel user;
 
   @override
   State<ProfileEdit> createState() => _ProfileEditState();
 }
 
 class _ProfileEditState extends State<ProfileEdit> {
-  final passwordController = TextEditingController();
-  final rePasswordController = TextEditingController();
-  final usernameController = TextEditingController();
+  final nameController = TextEditingController();
   final phoneController = TextEditingController();
+  final emailController = TextEditingController();
 
   String roleDropdownValue = roles.first;
   String specializeDropdownValue = specialize.first;
 
   @override
+  void initState() {
+    super.initState();
+    nameController.text = widget.user.name;
+    phoneController.text = widget.user.phone.toString();
+    emailController.text = widget.user.email;
+    roleDropdownValue = widget.user.role;
+    specializeDropdownValue = widget.user.specializeArea == null
+        ? specialize.first
+        : widget.user.specializeArea!.area;
+  }
+
+  @override
   void dispose() {
-    passwordController.dispose();
-    rePasswordController.dispose();
-    usernameController.dispose();
     phoneController.dispose();
+    emailController.dispose();
+    nameController.dispose();
     super.dispose();
+  }
+
+  bool validate() {
+    if (phoneController.text.isEmpty) {
+      Fluttertoast.showToast(
+          msg: "Phone Number is empty. Please enter all information.");
+
+      return false;
+    } else if (nameController.text.isEmpty) {
+      Fluttertoast.showToast(
+          msg: "Name is empty. Please enter all information.");
+
+      return false;
+    } else if (emailController.text.isEmpty) {
+      Fluttertoast.showToast(
+          msg: "Email is empty. Please enter all information.");
+
+      return false;
+    }
+
+    return true;
   }
 
   @override
@@ -34,7 +73,56 @@ class _ProfileEditState extends State<ProfileEdit> {
       appBar: AppBar(
         actions: [
           TextButton(
-            onPressed: () {},
+            onPressed: () async {
+              if (validate()) {
+                var result;
+
+                if (roleDropdownValue == 'Presenter') {
+                  print("is presenter: $specializeDropdownValue");
+                  SpecializeAreaModel? getting = await SpecializeAreaService()
+                      .getByArea(specializeDropdownValue)
+                      .then((specializeArea) async {
+                    print("is presenter2: $specializeArea");
+
+                    final update = await UserService().update(
+                      name: nameController.text,
+                      email: emailController.text,
+                      phone: phoneController.text,
+                      role: roleDropdownValue,
+                      specializeArea: specializeArea,
+                      user: widget.user,
+                    );
+
+                    print("Update: $update");
+
+                    return specializeArea;
+                  });
+
+                  if (getting != null) {
+                    result = true;
+                  }
+                } else {
+                  result = await UserService().update(
+                    name: nameController.text,
+                    email: emailController.text,
+                    phone: phoneController.text,
+                    role: roleDropdownValue,
+                    user: widget.user,
+                  );
+                }
+
+                if (result) {
+                  if (context.mounted) {
+                    Navigator.pop(context);
+                    Navigator.pop(context);
+                    Fluttertoast.showToast(
+                        msg: "Profile update. Refresh if there is no changes.");
+                  }
+                } else {
+                  Fluttertoast.showToast(msg: "Username or Password wrong.");
+                }
+              }
+            },
             child: const Text(
               "Confirm",
               style: TextStyle(color: CustomColor.primary),
@@ -139,48 +227,94 @@ class _ProfileEditState extends State<ProfileEdit> {
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 8.0),
                   child: TextFormField(
-                    initialValue: "Username here",
                     decoration: const InputDecoration(labelText: 'Username'),
-                    controller: null, // TODO
+                    readOnly: true,
+                    initialValue: widget.user.username,
                   ),
                 ),
                 // Name
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 8.0),
                   child: TextFormField(
-                    initialValue: "Name here",
                     decoration: const InputDecoration(labelText: 'Name'),
-                    controller: null, // TODO
+                    controller: nameController,
                   ),
                 ),
-
+                // Email
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 8.0),
+                  child: TextFormField(
+                    decoration: const InputDecoration(labelText: 'Email'),
+                    controller: emailController,
+                  ),
+                ),
                 // Phone
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 8.0),
                   child: TextFormField(
-                    initialValue: "Phone here",
                     decoration: const InputDecoration(labelText: 'PhoneNumber'),
-                    controller: null, // TODO
+                    controller: phoneController,
+                    inputFormatters: <TextInputFormatter>[
+                      FilteringTextInputFormatter.digitsOnly
+                    ],
                   ),
                 ),
                 // Role
                 Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 8.0),
-                  child: TextFormField(
-                    initialValue: "Role here",
-                    decoration: const InputDecoration(labelText: 'Role'),
-                    controller: null, // TODO
+                  padding: const EdgeInsets.only(top: 8, bottom: 10),
+                  child: DropdownButtonFormField(
+                    value: roleDropdownValue,
+                    icon: const Icon(Icons.arrow_downward),
+                    decoration: const InputDecoration(
+                      label: Text("Role"),
+                    ),
+                    dropdownColor: CupertinoColors.darkBackgroundGray,
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontFamily: GoogleFonts.jetBrainsMono().fontFamily,
+                    ),
+                    onChanged: (String? value) {
+                      setState(() {
+                        roleDropdownValue = value!;
+                      });
+                    },
+                    items: roles.map<DropdownMenuItem<String>>((String value) {
+                      return DropdownMenuItem<String>(
+                        value: value,
+                        child: Text(value),
+                      );
+                    }).toList(),
                   ),
                 ),
                 // Specialize
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 8.0),
-                  child: TextFormField(
-                    initialValue: "specialize here",
-                    decoration: const InputDecoration(labelText: 'specialize'),
-                    controller: null, // TODO
-                  ),
-                ),
+                roleDropdownValue == 'Presenter'
+                    ? Padding(
+                        padding: const EdgeInsets.only(top: 8),
+                        child: DropdownButtonFormField(
+                          value: specializeDropdownValue,
+                          decoration: const InputDecoration(
+                            label: Text("Specialize"),
+                          ),
+                          dropdownColor: CupertinoColors.darkBackgroundGray,
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontFamily: GoogleFonts.jetBrainsMono().fontFamily,
+                          ),
+                          onChanged: (String? value) {
+                            setState(() {
+                              specializeDropdownValue = value!;
+                            });
+                          },
+                          items: specialize
+                              .map<DropdownMenuItem<String>>((String value) {
+                            return DropdownMenuItem<String>(
+                              value: value,
+                              child: Text(value),
+                            );
+                          }).toList(),
+                        ),
+                      )
+                    : const SizedBox(),
               ],
             ),
           ),

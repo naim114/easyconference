@@ -95,4 +95,37 @@ class UserService {
       return false;
     }
   }
+
+  Future update({
+    required UserModel user,
+    required String name,
+    required String email,
+    required String phone,
+    required String role,
+    SpecializeAreaModel? specializeArea,
+  }) async {
+    try {
+      final db = await DBService.instance.database;
+      db.update(
+        table,
+        {
+          'name': name,
+          'email': email,
+          'phone': phone,
+          'role': role,
+          'specializeArea': specializeArea?.id,
+        },
+        where: 'id = ?',
+        whereArgs: [user.id],
+      );
+
+      return true;
+    } catch (e) {
+      print(e.toString());
+      return false;
+    }
+  }
 }
+
+// TODO update username n password 
+// TODO update profile

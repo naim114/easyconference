@@ -31,13 +31,8 @@ class AuthService {
       final allUsers = await UserService().getAll();
 
       for (var user in allUsers) {
-        print("user: $user");
-
-        print("user.username: ${user.username}");
         if (user.username == username) {
-          print("user.password: ${user.password}");
           if (user.password == password) {
-            print('match user: $user');
             matchedUser.add(user);
           }
         }
@@ -51,7 +46,7 @@ class AuthService {
         final result = await db.insert(table, {'user': matchedUser.first.id});
 
         print('Log In: $result');
-        print('User Log In: $logIn');
+        print('User Logged In: ${matchedUser.first}');
 
         return true;
       }

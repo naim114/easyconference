@@ -49,7 +49,7 @@ class _AuthWrapperState extends State<AuthWrapper> {
 
         print("logged in: $user");
 
-        return user == null ? const AuthIndex() : const Frame();
+        return user == null ? const AuthIndex() : Frame(user: user);
       },
     );
   }
