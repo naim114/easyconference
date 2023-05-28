@@ -257,7 +257,7 @@ class _ProfileEditState extends State<ProfileEdit> {
                       image: DecorationImage(
                         image:
                             MemoryImage(base64Decode(widget.user.avatarBytes!)),
-                        fit: BoxFit.contain,
+                        fit: BoxFit.cover,
                       ),
                     ),
                   ),

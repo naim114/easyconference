@@ -67,15 +67,15 @@ class _MyAppState extends State<MyApp> {
             return scaffoldLoader();
           }
 
-          // print("all special: ${snapshot.data![0]}");
-          // print("all user: ${snapshot.data![1]}");
+          print("all special: ${snapshot.data![0]}");
+          print("all user: ${snapshot.data![1]}");
 
-          // print("all user;");
-          // for (UserModel user in snapshot.data![1] as List<UserModel>) {
-          //   print(
-          //       "username: ${user.username}, avatar: ${user.avatarPath}, specializeArea: ${user.specializeArea?.area}\n");
-          // }
+          print("all user;");
+          for (UserModel user in snapshot.data![1] as List<UserModel>) {
+            print("username: ${user.username}\n");
+          }
 
+          // seeder (initial data for easier debug)
           if (snapshot.data![0].isEmpty) {
             seed(snapshot.data![1].isEmpty);
           }

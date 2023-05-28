@@ -1,6 +1,6 @@
 import 'package:convex_bottom_bar/convex_bottom_bar.dart';
 import 'package:easyconference/model/user_model.dart';
-import 'package:easyconference/module/account/index.dart';
+import 'package:easyconference/module/profile/account.dart';
 import 'package:easyconference/module/presenter/index.dart';
 import 'package:easyconference/module/profile/index.dart';
 import 'package:easyconference/service/auth_service.dart';
@@ -48,7 +48,7 @@ class _FrameState extends State<Frame> {
                 onTap: () => Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => Account(),
+                    builder: (context) => Account(user: widget.user),
                   ),
                 ),
               ),

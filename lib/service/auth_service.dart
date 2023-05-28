@@ -22,6 +22,7 @@ class AuthService {
   Future<bool> logIn({
     required String username,
     required String password,
+    bool updateAuth = true,
   }) async {
     print("username: $username");
     print("password: $password");
@@ -41,12 +42,14 @@ class AuthService {
       if (matchedUser.isEmpty) {
         return false;
       } else {
-        // insert to db
-        final db = await DBService.instance.database;
-        final result = await db.insert(table, {'user': matchedUser.first.id});
+        if (updateAuth) {
+          // insert to db
+          final db = await DBService.instance.database;
+          final result = await db.insert(table, {'user': matchedUser.first.id});
 
-        print('Log In: $result');
-        print('User Logged In: ${matchedUser.first}');
+          print('Log In: $result');
+          print('User Logged In: ${matchedUser.first}');
+        }
 
         return true;
       }

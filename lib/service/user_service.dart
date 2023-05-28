@@ -129,7 +129,7 @@ class UserService {
     }
   }
 
-  Future updateAuth({
+  Future<bool> updateAuth({
     required UserModel user,
     required String newUsername,
     required String newPassword,
