@@ -22,14 +22,18 @@ class _PresenterState extends State<Presenter> {
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
       GlobalKey<RefreshIndicatorState>();
 
-  List<UserModel>? users;
+  List<UserModel>? presenters;
 
   Future<void> _refreshData() async {
     try {
       final List<UserModel> fetchedData = await UserService().getAllPresenter();
 
+      // sort by latest
+      fetchedData.sort(
+          (a, b) => b.specializeArea!.area.compareTo(a.specializeArea!.area));
+
       setState(() {
-        users = fetchedData;
+        presenters = fetchedData;
       });
 
       _refreshIndicatorKey.currentState?.show();
@@ -51,16 +55,16 @@ class _PresenterState extends State<Presenter> {
     return RefreshIndicator(
       key: _refreshIndicatorKey,
       onRefresh: _refreshData,
-      child: users == null
+      child: presenters == null
           ? scaffoldLoader()
           : Scaffold(
               body: ListView(
                 children: List.generate(
-                  users!.length,
+                  presenters!.length,
                   (index) => InkWell(
                     onTap: () => Navigator.of(context).push(MaterialPageRoute(
                         builder: (context) => PresenterView(
-                              presenter: users![index],
+                              presenter: presenters![index],
                             ))),
                     child: ListTile(
                       shape: const Border(
@@ -68,12 +72,12 @@ class _PresenterState extends State<Presenter> {
                           color: CustomColor.neutral2,
                         ),
                       ),
-                      leading: customAvatar(user: users![index]),
+                      leading: customAvatar(user: presenters![index]),
                       title: Text(
-                        users![index].name,
+                        presenters![index].name,
                         style: const TextStyle(fontWeight: FontWeight.bold),
                       ),
-                      subtitle: Text(users![index].specializeArea!.area),
+                      subtitle: Text(presenters![index].specializeArea!.area),
                     ),
                   ),
                 ),

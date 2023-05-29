@@ -29,6 +29,9 @@ class _ConferenceState extends State<Conference> {
       final List<ConferenceModel> fetchedData =
           await ConferenceService().getAll();
 
+      // sort by latest
+      fetchedData.sort((a, b) => b.dateTime.compareTo(a.dateTime));
+
       setState(() {
         conferences = fetchedData;
       });
