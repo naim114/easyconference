@@ -65,7 +65,7 @@ class ConferenceService {
     required String name,
     required String dateTime,
     required String desc,
-    required Uint8List? posterBytes,
+    Uint8List? posterBytes,
     required UserModel presenter,
   }) async {
     try {
@@ -77,6 +77,39 @@ class ConferenceService {
         'posterBytes': posterBytes == null ? null : base64Encode(posterBytes),
         'presenter': presenter.id,
       });
+      print('Add Conference: $result');
+
+      return true;
+    } catch (e) {
+      print(e.toString());
+      return false;
+    }
+  }
+
+  Future<bool> edit({
+    required ConferenceModel conference,
+    required String name,
+    required String dateTime,
+    required String desc,
+    Uint8List? posterBytes,
+    required UserModel presenter,
+  }) async {
+    try {
+      final db = await DBService.instance.database;
+
+      final result = await db.update(
+        table,
+        {
+          'name': name,
+          'dateTime': dateTime,
+          'desc': desc,
+          'posterBytes': posterBytes == null ? null : base64Encode(posterBytes),
+          'presenter': presenter.id,
+        },
+        where: 'id = ?',
+        whereArgs: [conference.id],
+      );
+
       print('Add Conference: $result');
 
       return true;

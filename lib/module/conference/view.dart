@@ -1,38 +1,46 @@
+import 'dart:convert';
+
+import 'package:easyconference/model/conference_model.dart';
+import 'package:easyconference/module/conference/edit.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 import '../../model/user_model.dart';
 import '../../service/helpers.dart';
 import '../../service/user_service.dart';
 
 class ConferenceView extends StatelessWidget {
-  const ConferenceView({super.key});
+  const ConferenceView({super.key, required this.conference});
+
+  final ConferenceModel conference;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         actions: [
-          // FutureBuilder<List<UserModel>>(
-          //     future: UserService().getAllPresenter(),
-          //     builder: (context, snapshot) {
-          //       if (snapshot.connectionState == ConnectionState.waiting) {
-          //         return const SizedBox();
-          //       }
+          FutureBuilder<List<UserModel>>(
+              future: UserService().getAllPresenter(),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const SizedBox();
+                }
 
-          //       return snapshot.data == null
-          //           ? const SizedBox()
-          //           : IconButton(
-          //               onPressed: () => Navigator.of(context).push(
-          //                 MaterialPageRoute(
-          //                   builder: (context) => ConferenceEdit(
-          //                     presenters: snapshot.data!,
-          //                   ),
-          //                 ),
-          //               ),
-          //               icon: const Icon(Icons.edit),
-          //             );
-          //     }),
+                return snapshot.data == null
+                    ? const SizedBox()
+                    : IconButton(
+                        onPressed: () => Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) => ConferenceEdit(
+                              presenters: snapshot.data!,
+                              conference: conference,
+                            ),
+                          ),
+                        ),
+                        icon: const Icon(Icons.edit),
+                      );
+              }),
           IconButton(
             onPressed: () => showDialog<String>(
               context: context,
@@ -67,19 +75,27 @@ class ConferenceView extends StatelessWidget {
       ),
       body: ListView(
         children: [
-          // Poster
-          SizedBox(
-            child: Container(
-              height: MediaQuery.of(context).size.height * 0.25,
-              width: MediaQuery.of(context).size.width * 0.25,
-              decoration: const BoxDecoration(
-                image: DecorationImage(
-                  image: AssetImage('assets/image/noimage.png'),
-                  fit: BoxFit.contain,
+          conference.posterBytes == null
+              ? Container(
+                  height: MediaQuery.of(context).size.height * 0.25,
+                  width: MediaQuery.of(context).size.width * 0.25,
+                  decoration: const BoxDecoration(
+                    image: DecorationImage(
+                      image: AssetImage('assets/image/noimage.png'),
+                      fit: BoxFit.contain,
+                    ),
+                  ),
+                )
+              : Container(
+                  height: MediaQuery.of(context).size.height * 0.25,
+                  width: MediaQuery.of(context).size.width * 0.25,
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      image: MemoryImage(base64Decode(conference.posterBytes!)),
+                      fit: BoxFit.contain,
+                    ),
+                  ),
                 ),
-              ),
-            ),
-          ),
           // Details
           Padding(
             padding: const EdgeInsets.only(
@@ -92,15 +108,15 @@ class ConferenceView extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  "Session Name",
-                  style: TextStyle(
+                  conference.name,
+                  style: const TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 20,
                   ),
                 ),
                 Text(
-                  "Date and Time",
-                  style: TextStyle(
+                  DateFormat("dd/MM/yyyy hh:mm a").format(conference.dateTime),
+                  style: const TextStyle(
                     fontSize: 18,
                   ),
                 ),
@@ -108,26 +124,25 @@ class ConferenceView extends StatelessWidget {
                 Text.rich(
                   TextSpan(
                     children: [
-                      TextSpan(
+                      const TextSpan(
                           text: "Presenter: ",
                           style: TextStyle(fontWeight: FontWeight.bold)),
-                      TextSpan(text: "Presenter Name"),
+                      TextSpan(text: conference.presenter.name),
                     ],
                   ),
                 ),
                 Text.rich(
                   TextSpan(
                     children: [
-                      TextSpan(
+                      const TextSpan(
                           text: "Specialize: ",
                           style: TextStyle(fontWeight: FontWeight.bold)),
-                      TextSpan(text: "Specialize"),
+                      TextSpan(text: conference.presenter.specializeArea!.area),
                     ],
                   ),
                 ),
                 const SizedBox(height: 20),
-                Text(
-                    "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi ac nisl vitae ante efficitur pretium eu non felis. Cras commodo ex non luctus gravida. Curabitur varius placerat faucibus. Phasellus id lectus dictum, pulvinar justo quis, dapibus urna. Vivamus elementum felis ut orci placerat pulvinar. Sed elit risus, congue et justo quis, aliquet imperdiet ipsum.")
+                Text(conference.desc)
               ],
             ),
           ),

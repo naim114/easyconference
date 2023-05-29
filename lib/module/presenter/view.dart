@@ -69,18 +69,18 @@ class PresenterView extends StatelessWidget {
           ),
           // Sessions TODO
           const Divider(),
-          InkWell(
-            onTap: () => Navigator.of(context).push(MaterialPageRoute(
-              builder: (context) => ConferenceView(),
-            )),
-            child: ListTile(
-              title: Text(
-                "Session Name",
-                style: TextStyle(fontWeight: FontWeight.bold),
-              ),
-              trailing: Text("16/3/2023"),
-            ),
-          ),
+          // InkWell(
+          //   onTap: () => Navigator.of(context).push(MaterialPageRoute(
+          //     builder: (context) => ConferenceView(),
+          //   )),
+          //   child: ListTile(
+          //     title: Text(
+          //       "Session Name",
+          //       style: TextStyle(fontWeight: FontWeight.bold),
+          //     ),
+          //     trailing: Text("16/3/2023"),
+          //   ),
+          // ),
         ],
       ),
     );

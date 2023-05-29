@@ -84,7 +84,9 @@ class _ConferenceState extends State<Conference> {
                     onTap: () {
                       Navigator.of(widget.mainContext).push(
                         MaterialPageRoute(
-                          builder: (context) => ConferenceView(),
+                          builder: (context) => ConferenceView(
+                            conference: conferences![index],
+                          ),
                         ),
                       );
                     },

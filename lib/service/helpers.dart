@@ -32,9 +32,3 @@ Uint8List imageToBytes(File imageFile) {
   final bytes = imageFile.readAsBytesSync();
   return Uint8List.fromList(bytes);
 }
-
-File bytesToImage(Uint8List imageBytes, String filePath) {
-  final file = File(filePath);
-  file.writeAsBytesSync(imageBytes);
-  return file;
-}
