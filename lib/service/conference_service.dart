@@ -110,8 +110,25 @@ class ConferenceService {
         whereArgs: [conference.id],
       );
 
-      print('Add Conference: $result');
+      print('Edit Conference: $result');
 
+      return true;
+    } catch (e) {
+      print(e.toString());
+      return false;
+    }
+  }
+
+  Future<bool> delete(ConferenceModel conference) async {
+    try {
+      final db = await dbInstance.database;
+      final result = await db.delete(
+        table,
+        where: 'id = ?',
+        whereArgs: [conference.id],
+      );
+
+      print('Delete Conference: $result');
       return true;
     } catch (e) {
       print(e.toString());

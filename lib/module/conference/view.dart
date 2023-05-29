@@ -2,8 +2,10 @@ import 'dart:convert';
 
 import 'package:easyconference/model/conference_model.dart';
 import 'package:easyconference/module/conference/edit.dart';
+import 'package:easyconference/service/conference_service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
 
 import '../../model/user_model.dart';
@@ -60,7 +62,18 @@ class ConferenceView extends StatelessWidget {
                     ),
                   ),
                   TextButton(
-                    onPressed: () {},
+                    onPressed: () async {
+                      final result =
+                          await ConferenceService().delete(conference);
+
+                      if (context.mounted) {
+                        if (result) {
+                          Navigator.pop(context);
+                          Navigator.pop(context);
+                          Fluttertoast.showToast(msg: "Conference deleted!");
+                        }
+                      }
+                    },
                     child: const Text(
                       'OK',
                       style: TextStyle(color: CustomColor.danger),
