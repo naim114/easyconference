@@ -65,7 +65,7 @@ class _ProfileState extends State<Profile> {
               ),
               body: ListView(
                 children: [
-                  // Avatar // TODO change this to user image
+                  // Avatar
                   userState!.avatarBytes == null
                       ? Container(
                           height: MediaQuery.of(context).size.height * 0.17,

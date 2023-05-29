@@ -51,6 +51,19 @@ class UserService {
     return result!;
   }
 
+  Future<List<UserModel>> getAllPresenter() async {
+    final List<UserModel> all = await UserService().getAll();
+    final List<UserModel> presenter = List.empty(growable: true);
+
+    for (var user in all) {
+      if (user.role == 'Presenter') {
+        presenter.add(user);
+      }
+    }
+
+    return presenter;
+  }
+
   Future insert({required UserModel user}) async {
     try {
       final db = await DBService.instance.database;

@@ -1,9 +1,13 @@
+import 'dart:convert';
+
+import 'package:easyconference/model/user_model.dart';
 import 'package:flutter/material.dart';
 
 import '../conference/view.dart';
 
 class PresenterView extends StatelessWidget {
-  const PresenterView({super.key});
+  final UserModel presenter;
+  const PresenterView({super.key, required this.presenter});
 
   @override
   Widget build(BuildContext context) {
@@ -12,19 +16,28 @@ class PresenterView extends StatelessWidget {
       body: ListView(
         children: [
           // Avatar
-          SizedBox(
-            width: MediaQuery.of(context).size.height * 0.17,
-            child: Container(
-              height: MediaQuery.of(context).size.height * 0.17,
-              width: MediaQuery.of(context).size.height * 0.17,
-              decoration: const BoxDecoration(
-                image: DecorationImage(
-                  image: AssetImage('assets/image/default-profile-picture.png'),
-                  fit: BoxFit.contain,
+          presenter.avatarBytes == null
+              ? Container(
+                  height: MediaQuery.of(context).size.height * 0.17,
+                  width: MediaQuery.of(context).size.height * 0.17,
+                  decoration: const BoxDecoration(
+                    image: DecorationImage(
+                      image: AssetImage(
+                          'assets/image/default-profile-picture.png'),
+                      fit: BoxFit.contain,
+                    ),
+                  ),
+                )
+              : Container(
+                  height: MediaQuery.of(context).size.height * 0.17,
+                  width: MediaQuery.of(context).size.height * 0.17,
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      image: MemoryImage(base64Decode(presenter.avatarBytes!)),
+                      fit: BoxFit.cover,
+                    ),
+                  ),
                 ),
-              ),
-            ),
-          ),
           // Name
           Padding(
             padding: const EdgeInsets.only(
@@ -37,14 +50,14 @@ class PresenterView extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  "Presenter Name",
+                  presenter.name,
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 20,
                   ),
                 ),
                 Text(
-                  "Specialize",
+                  presenter.specializeArea!.area,
                   style: TextStyle(
                     fontSize: 18,
                   ),
