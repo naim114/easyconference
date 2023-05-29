@@ -19,7 +19,7 @@ class UserService {
       role: map['role'],
       username: map['username'],
       password: map['password'],
-      avatarBytes: map['avatarPath'],
+      avatarBytes: map['avatarBytes'],
       specializeArea: map['specializeArea'] == null
           ? null
           : await SpecializeAreaService().get(map['specializeArea']),
@@ -84,7 +84,7 @@ class UserService {
     required String role,
     required String username,
     required String password,
-    String? avatarPath,
+    String? avatarBytes,
     SpecializeAreaModel? specializeArea,
   }) async {
     try {
@@ -98,7 +98,7 @@ class UserService {
           'role': role,
           'username': username,
           'password': password,
-          'avatarPath': avatarPath,
+          'avatarBytes': avatarBytes,
           'specializeArea': specializeArea?.id,
         },
       );
@@ -175,7 +175,7 @@ class UserService {
       db.update(
         table,
         {
-          'avatarPath': base64Encode(avatar),
+          'avatarBytes': base64Encode(avatar),
         },
         where: 'id = ?',
         whereArgs: [user.id],
@@ -194,7 +194,7 @@ class UserService {
       db.update(
         table,
         {
-          'avatarPath': null,
+          'avatarBytes': null,
         },
         where: 'id = ?',
         whereArgs: [user.id],

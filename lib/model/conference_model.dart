@@ -19,16 +19,16 @@ class ConferenceModel {
 
   @override
   String toString() {
-    return 'ConferenceModel(id: $id, name: $name, dateTime: $dateTime, desc: $desc, posterPath: $posterBytes, presenter: $presenter)';
+    return 'ConferenceModel(id: $id, name: $name, dateTime: $dateTime, desc: $desc, posterBytes: $posterBytes, presenter: $presenter)';
   }
 
   Map<String, dynamic> toMap() {
     return {
       'id': id,
       'name': name,
-      'dateTime': dateTime,
+      'dateTime': dateTime.toString(),
       'desc': desc,
-      'posterPath': posterBytes,
+      'posterBytes': posterBytes,
       'presenter': presenter.id,
     };
   }

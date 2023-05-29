@@ -1,8 +1,9 @@
-import 'package:easyconference/module/conference/edit.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import '../../model/user_model.dart';
 import '../../service/helpers.dart';
+import '../../service/user_service.dart';
 
 class ConferenceView extends StatelessWidget {
   const ConferenceView({super.key});
@@ -12,14 +13,26 @@ class ConferenceView extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         actions: [
-          IconButton(
-            onPressed: () => Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (context) => ConferenceEdit(),
-              ),
-            ),
-            icon: const Icon(Icons.edit),
-          ),
+          // FutureBuilder<List<UserModel>>(
+          //     future: UserService().getAllPresenter(),
+          //     builder: (context, snapshot) {
+          //       if (snapshot.connectionState == ConnectionState.waiting) {
+          //         return const SizedBox();
+          //       }
+
+          //       return snapshot.data == null
+          //           ? const SizedBox()
+          //           : IconButton(
+          //               onPressed: () => Navigator.of(context).push(
+          //                 MaterialPageRoute(
+          //                   builder: (context) => ConferenceEdit(
+          //                     presenters: snapshot.data!,
+          //                   ),
+          //                 ),
+          //               ),
+          //               icon: const Icon(Icons.edit),
+          //             );
+          //     }),
           IconButton(
             onPressed: () => showDialog<String>(
               context: context,

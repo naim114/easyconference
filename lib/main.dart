@@ -56,6 +56,18 @@ class _MyAppState extends State<MyApp> {
         dialogTheme: const DialogTheme(
           backgroundColor: CupertinoColors.darkBackgroundGray,
         ),
+        dropdownMenuTheme: DropdownMenuThemeData(
+          textStyle: TextStyle(
+            fontWeight: FontWeight.bold,
+            fontFamily: GoogleFonts.jetBrainsMono().fontFamily,
+          ),
+          inputDecorationTheme: InputDecorationTheme(
+            labelStyle: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontFamily: GoogleFonts.jetBrainsMono().fontFamily,
+            ),
+          ),
+        ),
       ),
       home: FutureBuilder(
         future: Future.wait([

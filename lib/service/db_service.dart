@@ -23,7 +23,7 @@ class DBService {
         role integer not null,
         username text not null,
         password text not null,
-        avatarPath text,
+        avatarBytes text,
         specializeArea integer)
     ''');
 
@@ -34,7 +34,7 @@ class DBService {
         name text not null,
         dateTime text not null,
         desc text not null,
-        posterPath text,
+        posterBytes text,
         presenter integer not null)
     ''');
 

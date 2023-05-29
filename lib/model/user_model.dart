@@ -25,7 +25,7 @@ class UserModel {
 
   @override
   String toString() {
-    return 'UserModel(id: $id, name: $name, email: $email, phone: $phone, role: $role, username: $username, password: $password, avatarPath: $avatarBytes, specializeArea: $specializeArea)';
+    return 'UserModel(id: $id, name: $name, email: $email, phone: $phone, role: $role, username: $username, password: $password, avatarBytes: $avatarBytes, specializeArea: $specializeArea)';
   }
 
   Map<String, dynamic> toMap() {
@@ -37,7 +37,7 @@ class UserModel {
       'role': role,
       'username': username,
       'password': password,
-      'avatarPath': avatarBytes,
+      'avatarBytes': avatarBytes,
       'specializeArea': specializeArea == null ? null : specializeArea!.id,
     };
   }
