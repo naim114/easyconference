@@ -68,7 +68,7 @@ class _PresenterState extends State<Presenter> {
                           color: CustomColor.neutral2,
                         ),
                       ),
-                      leading: customAvatar(),
+                      leading: customAvatar(user: users![index]),
                       title: Text(
                         users![index].name,
                         style: const TextStyle(fontWeight: FontWeight.bold),

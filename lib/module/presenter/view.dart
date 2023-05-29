@@ -1,8 +1,8 @@
 import 'dart:convert';
 
-import 'package:easyconference/model/user_model.dart';
 import 'package:flutter/material.dart';
 
+import '../../model/user_model.dart';
 import '../conference/view.dart';
 
 class PresenterView extends StatelessWidget {
@@ -19,8 +19,9 @@ class PresenterView extends StatelessWidget {
           presenter.avatarBytes == null
               ? Container(
                   height: MediaQuery.of(context).size.height * 0.17,
-                  width: MediaQuery.of(context).size.height * 0.17,
+                  width: MediaQuery.of(context).size.width * 0.17,
                   decoration: const BoxDecoration(
+                    shape: BoxShape.circle,
                     image: DecorationImage(
                       image: AssetImage(
                           'assets/image/default-profile-picture.png'),
@@ -30,11 +31,12 @@ class PresenterView extends StatelessWidget {
                 )
               : Container(
                   height: MediaQuery.of(context).size.height * 0.17,
-                  width: MediaQuery.of(context).size.height * 0.17,
+                  width: MediaQuery.of(context).size.width * 0.17,
                   decoration: BoxDecoration(
+                    shape: BoxShape.circle,
                     image: DecorationImage(
                       image: MemoryImage(base64Decode(presenter.avatarBytes!)),
-                      fit: BoxFit.cover,
+                      fit: BoxFit.fill,
                     ),
                   ),
                 ),
@@ -65,7 +67,7 @@ class PresenterView extends StatelessWidget {
               ],
             ),
           ),
-          // Sessions
+          // Sessions TODO
           const Divider(),
           InkWell(
             onTap: () => Navigator.of(context).push(MaterialPageRoute(

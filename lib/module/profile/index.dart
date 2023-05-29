@@ -87,7 +87,7 @@ class _ProfileState extends State<Profile> {
                             image: DecorationImage(
                               image: MemoryImage(
                                   base64Decode(userState!.avatarBytes!)),
-                              fit: BoxFit.cover,
+                              fit: BoxFit.fill,
                             ),
                           ),
                         ),
