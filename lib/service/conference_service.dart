@@ -48,6 +48,19 @@ class ConferenceService {
     return result!;
   }
 
+  Future<List<ConferenceModel>> getByUser(UserModel user) async {
+    final List<ConferenceModel> all = await ConferenceService().getAll();
+    final List<ConferenceModel> matched = List.empty(growable: true);
+
+    for (var element in all) {
+      if (element.presenter.id == user.id) {
+        matched.add(element);
+      }
+    }
+
+    return matched;
+  }
+
   Future insert({required ConferenceModel data}) async {
     try {
       final db = await DBService.instance.database;
