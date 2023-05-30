@@ -23,6 +23,7 @@ class _PresenterState extends State<Presenter> {
       GlobalKey<RefreshIndicatorState>();
 
   List<UserModel>? presenters;
+  bool sortAsc = true;
 
   Future<void> _refreshData() async {
     try {
@@ -30,7 +31,7 @@ class _PresenterState extends State<Presenter> {
 
       // sort by latest
       fetchedData.sort(
-          (a, b) => b.specializeArea!.area.compareTo(a.specializeArea!.area));
+          (a, b) => a.specializeArea!.area.compareTo(b.specializeArea!.area));
 
       setState(() {
         presenters = fetchedData;
@@ -58,6 +59,33 @@ class _PresenterState extends State<Presenter> {
       child: presenters == null
           ? scaffoldLoader()
           : Scaffold(
+              appBar: AppBar(
+                automaticallyImplyLeading: false,
+                actions: [
+                  IconButton(
+                    onPressed: () {
+                      if (presenters!.length > 1) {
+                        if (sortAsc) {
+                          // desc
+                          setState(() {
+                            sortAsc = false;
+                            presenters!.sort((a, b) => b.specializeArea!.area
+                                .compareTo(a.specializeArea!.area));
+                          });
+                        } else {
+                          // asc
+                          setState(() {
+                            sortAsc = true;
+                            presenters!.sort((a, b) => a.specializeArea!.area
+                                .compareTo(b.specializeArea!.area));
+                          });
+                        }
+                      }
+                    },
+                    icon: const Icon(Icons.sort_rounded),
+                  ),
+                ],
+              ),
               body: ListView(
                 children: List.generate(
                   presenters!.length,

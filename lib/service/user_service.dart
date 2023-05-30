@@ -23,6 +23,8 @@ class UserService {
       specializeArea: map['specializeArea'] == null
           ? null
           : await SpecializeAreaService().get(map['specializeArea']),
+      institute: map['institute'],
+      isAdmin: map['isAdmin'] == 1 ? true : false,
     );
   }
 
@@ -82,6 +84,7 @@ class UserService {
     required String email,
     required String phone,
     required String role,
+    required String institute,
     required String username,
     required String password,
     String? avatarBytes,
@@ -100,6 +103,8 @@ class UserService {
           'password': password,
           'avatarBytes': avatarBytes,
           'specializeArea': specializeArea?.id,
+          'isAdmin': false,
+          'institute': institute,
         },
       );
 
@@ -118,6 +123,7 @@ class UserService {
     required String email,
     required String phone,
     required String role,
+    required String institute,
     SpecializeAreaModel? specializeArea,
   }) async {
     try {
@@ -130,6 +136,7 @@ class UserService {
           'phone': phone,
           'role': role,
           'specializeArea': specializeArea?.id,
+          'institute': institute,
         },
         where: 'id = ?',
         whereArgs: [user.id],

@@ -25,6 +25,7 @@ class _SignUpState extends State<SignUp> {
   final nameController = TextEditingController();
   final phoneController = TextEditingController();
   final emailController = TextEditingController();
+  final instituteController = TextEditingController();
 
   String roleDropdownValue = roles.first;
   String specializeDropdownValue = specialize.first;
@@ -36,6 +37,7 @@ class _SignUpState extends State<SignUp> {
     usernameController.dispose();
     phoneController.dispose();
     nameController.dispose();
+    instituteController.dispose();
     super.dispose();
   }
 
@@ -68,6 +70,11 @@ class _SignUpState extends State<SignUp> {
     } else if (emailController.text.isEmpty) {
       Fluttertoast.showToast(
           msg: "Email is empty. Please enter all information.");
+
+      return false;
+    } else if (instituteController.text.isEmpty) {
+      Fluttertoast.showToast(
+          msg: "Institute is empty. Please enter all information.");
 
       return false;
     }
@@ -154,6 +161,15 @@ class _SignUpState extends State<SignUp> {
             ),
           ),
           Padding(
+            padding: const EdgeInsets.only(top: 10, bottom: 10),
+            child: CustomTextField(
+              controller: instituteController,
+              icon: const Icon(CupertinoIcons.building_2_fill),
+              labelText: 'Institute',
+              isPassword: false,
+            ),
+          ),
+          Padding(
             padding: const EdgeInsets.only(top: 8, bottom: 10),
             child: DropdownButtonFormField(
               value: roleDropdownValue,
@@ -237,6 +253,7 @@ class _SignUpState extends State<SignUp> {
                       username: usernameController.text,
                       password: passwordController.text,
                       specializeArea: specializeArea,
+                      institute: instituteController.text,
                     );
 
                     print("Sign Up: $signUp");
@@ -256,6 +273,7 @@ class _SignUpState extends State<SignUp> {
                     username: usernameController.text,
                     password: passwordController.text,
                     specializeArea: null,
+                    institute: instituteController.text,
                   );
                 }
 

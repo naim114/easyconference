@@ -25,6 +25,7 @@ class _ProfileEditState extends State<ProfileEdit> {
   final nameController = TextEditingController();
   final phoneController = TextEditingController();
   final emailController = TextEditingController();
+  final instituteController = TextEditingController();
 
   String roleDropdownValue = roles.first;
   String specializeDropdownValue = specialize.first;
@@ -36,6 +37,7 @@ class _ProfileEditState extends State<ProfileEdit> {
     phoneController.text = widget.user.phone.toString();
     emailController.text = widget.user.email;
     roleDropdownValue = widget.user.role;
+    instituteController.text = widget.user.institute;
     specializeDropdownValue = widget.user.specializeArea == null
         ? specialize.first
         : widget.user.specializeArea!.area;
@@ -46,6 +48,7 @@ class _ProfileEditState extends State<ProfileEdit> {
     phoneController.dispose();
     emailController.dispose();
     nameController.dispose();
+    instituteController.dispose();
     super.dispose();
   }
 
@@ -63,6 +66,11 @@ class _ProfileEditState extends State<ProfileEdit> {
     } else if (emailController.text.isEmpty) {
       Fluttertoast.showToast(
           msg: "Email is empty. Please enter all information.");
+
+      return false;
+    } else if (instituteController.text.isEmpty) {
+      Fluttertoast.showToast(
+          msg: "Institute is empty. Please enter all information.");
 
       return false;
     }
@@ -94,6 +102,7 @@ class _ProfileEditState extends State<ProfileEdit> {
                       role: roleDropdownValue,
                       specializeArea: specializeArea,
                       user: widget.user,
+                      institute: instituteController.text,
                     );
 
                     print("Update: $update");
@@ -111,6 +120,7 @@ class _ProfileEditState extends State<ProfileEdit> {
                     phone: phoneController.text,
                     role: roleDropdownValue,
                     user: widget.user,
+                    institute: instituteController.text,
                   );
                 }
 
@@ -307,8 +317,20 @@ class _ProfileEditState extends State<ProfileEdit> {
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 8.0),
                   child: TextFormField(
-                    decoration: const InputDecoration(labelText: 'PhoneNumber'),
+                    decoration:
+                        const InputDecoration(labelText: 'Phone Number'),
                     controller: phoneController,
+                    inputFormatters: <TextInputFormatter>[
+                      FilteringTextInputFormatter.digitsOnly
+                    ],
+                  ),
+                ),
+                // Institute
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 8.0),
+                  child: TextFormField(
+                    decoration: const InputDecoration(labelText: 'Institute'),
+                    controller: instituteController,
                     inputFormatters: <TextInputFormatter>[
                       FilteringTextInputFormatter.digitsOnly
                     ],

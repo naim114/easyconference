@@ -1,4 +1,3 @@
-import 'package:easyconference/module/auth/index.dart';
 import 'package:easyconference/module/frame.dart';
 import 'package:easyconference/service/auth_service.dart';
 import 'package:easyconference/widget/scaffold_loader.dart';
@@ -37,7 +36,6 @@ class _AuthWrapperState extends State<AuthWrapper> {
 
   @override
   Widget build(BuildContext context) {
-    // TODO check if user logged in
     return FutureBuilder<UserModel?>(
       future: AuthService().getLoggedIn(),
       builder: (context, snapshot) {
@@ -49,7 +47,7 @@ class _AuthWrapperState extends State<AuthWrapper> {
 
         print("logged in: $user");
 
-        return user == null ? const AuthIndex() : Frame(user: user);
+        return Frame(user: user);
       },
     );
   }

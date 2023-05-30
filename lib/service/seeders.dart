@@ -42,6 +42,7 @@ Future userSeeders() async {
         role: 'Participant',
         username: 'user1',
         password: 'pass',
+        institute: 'BMI',
       ),
     );
 
@@ -54,6 +55,7 @@ Future userSeeders() async {
         role: 'Reviewer',
         username: 'user2',
         password: 'pass',
+        institute: 'MITEC',
       ),
     );
 
@@ -67,6 +69,7 @@ Future userSeeders() async {
         username: 'user3',
         password: 'pass',
         specializeArea: null,
+        institute: 'MIIT',
       ),
     );
 
@@ -84,6 +87,8 @@ Future userSeeders() async {
             username: 'user4',
             password: 'pass',
             specializeArea: specializeArea,
+            institute: 'Hogwarts',
+            isAdmin: true,
           ),
         );
       },

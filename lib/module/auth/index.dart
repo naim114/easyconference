@@ -14,7 +14,6 @@ class AuthIndex extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
-        automaticallyImplyLeading: false,
         centerTitle: true,
         title: const Text(
           "EasyConference",

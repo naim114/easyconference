@@ -23,6 +23,8 @@ class DBService {
         role integer not null,
         username text not null,
         password text not null,
+        institute text not null,
+        isAdmin integer not null,
         avatarBytes text,
         specializeArea integer)
     ''');
