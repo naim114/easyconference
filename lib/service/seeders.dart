@@ -75,8 +75,6 @@ Future userSeeders() async {
 
     await SpecializeAreaService().get(1).then(
       (specializeArea) async {
-        print("specializeArea: $specializeArea");
-
         return await UserService().insert(
           user: UserModel(
             id: 4,
@@ -88,6 +86,25 @@ Future userSeeders() async {
             password: 'pass',
             specializeArea: specializeArea,
             institute: 'Hogwarts',
+            isAdmin: true,
+          ),
+        );
+      },
+    );
+
+    await SpecializeAreaService().get(1).then(
+      (specializeArea) async {
+        return await UserService().insert(
+          user: UserModel(
+            id: 5,
+            name: 'admin',
+            email: 'admin@email.com',
+            phone: 601234678,
+            role: 'Presenter',
+            username: 'admin',
+            password: 'pass',
+            specializeArea: specializeArea,
+            institute: 'Xavier Special School',
             isAdmin: true,
           ),
         );

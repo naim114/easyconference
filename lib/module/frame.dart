@@ -3,6 +3,7 @@ import 'package:easyconference/model/user_model.dart';
 import 'package:easyconference/module/profile/account.dart';
 import 'package:easyconference/module/presenter/index.dart';
 import 'package:easyconference/module/profile/index.dart';
+import 'package:easyconference/module/profile/manage.dart';
 import 'package:easyconference/service/auth_service.dart';
 import 'package:easyconference/service/helpers.dart';
 import 'package:flutter/material.dart';
@@ -81,6 +82,17 @@ class _FrameState extends State<Frame> {
                       ),
                     ),
                   ),
+                  widget.user!.isAdmin
+                      ? ListTile(
+                          title: const Text('Manage Users'),
+                          onTap: () => Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const ManageUser(),
+                            ),
+                          ),
+                        )
+                      : const SizedBox(),
                   ListTile(
                     title: const Text(
                       'Logout',

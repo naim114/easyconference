@@ -131,8 +131,21 @@ class _ProfileState extends State<Profile> {
                           padding: const EdgeInsets.symmetric(vertical: 8.0),
                           child: TextFormField(
                             initialValue: userState!.phone.toString(),
+                            decoration: const InputDecoration(
+                                labelText: 'Phone Number'),
+                            readOnly: true,
+                            inputFormatters: <TextInputFormatter>[
+                              FilteringTextInputFormatter.digitsOnly
+                            ],
+                          ),
+                        ),
+                        // Institute
+                        Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 8.0),
+                          child: TextFormField(
+                            initialValue: userState!.institute,
                             decoration:
-                                const InputDecoration(labelText: 'PhoneNumber'),
+                                const InputDecoration(labelText: 'Institute'),
                             readOnly: true,
                             inputFormatters: <TextInputFormatter>[
                               FilteringTextInputFormatter.digitsOnly

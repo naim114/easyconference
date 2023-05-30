@@ -213,4 +213,22 @@ class UserService {
       return false;
     }
   }
+
+  Future<bool> delete(UserModel user) async {
+    try {
+      final db = await dbInstance.database;
+      final result = await db.delete(
+        table,
+        where: 'id = ?',
+        whereArgs: [user.id],
+      );
+
+      print("Delete user: $result");
+
+      return true;
+    } catch (e) {
+      print(e.toString());
+      return false;
+    }
+  }
 }
