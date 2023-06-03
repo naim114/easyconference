@@ -95,7 +95,7 @@ class _SignUpState extends State<SignUp> {
           const Padding(
             padding: EdgeInsets.only(bottom: 30.0),
             child: Text(
-              "Sign in",
+              "Sign up",
               style: TextStyle(
                 fontSize: 24,
                 fontWeight: FontWeight.bold,
