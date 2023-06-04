@@ -143,6 +143,9 @@ class _ManageUserState extends State<ManageUser> {
                                           if (result) {
                                             Fluttertoast.showToast(
                                                 msg: "User deleted!");
+                                            Fluttertoast.showToast(
+                                                msg:
+                                                    "Swipe down to refresh if there is no changes");
                                           }
 
                                           _refreshData();

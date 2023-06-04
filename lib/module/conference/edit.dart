@@ -108,6 +108,8 @@ class _ConferenceEditState extends State<ConferenceEdit> {
                     Navigator.pop(context);
                     Navigator.pop(context);
                     Fluttertoast.showToast(msg: "Conference updated!");
+                    Fluttertoast.showToast(
+                        msg: "Swipe down to refresh if there is no changes");
                   }
                 }
               }

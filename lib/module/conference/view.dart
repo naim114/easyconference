@@ -71,6 +71,9 @@ class ConferenceView extends StatelessWidget {
                           Navigator.pop(context);
                           Navigator.pop(context);
                           Fluttertoast.showToast(msg: "Conference deleted!");
+                          Fluttertoast.showToast(
+                              msg:
+                                  "Swipe down to refresh if there is no changes");
                         }
                       }
                     },

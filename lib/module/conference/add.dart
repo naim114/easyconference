@@ -96,6 +96,8 @@ class _ConferenceAddState extends State<ConferenceAdd> {
                   if (result) {
                     Navigator.pop(context);
                     Fluttertoast.showToast(msg: "Conference added!");
+                    Fluttertoast.showToast(
+                        msg: "Swipe down to refresh if there is no changes");
                   }
                 }
               }

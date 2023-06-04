@@ -92,7 +92,7 @@ Future userSeeders() async {
       },
     );
 
-    await SpecializeAreaService().get(1).then(
+    await SpecializeAreaService().get(4).then(
       (specializeArea) async {
         return await UserService().insert(
           user: UserModel(

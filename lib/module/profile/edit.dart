@@ -73,6 +73,10 @@ class _ProfileEditState extends State<ProfileEdit> {
           msg: "Institute is empty. Please enter all information.");
 
       return false;
+    } else if (!validateEmail(emailController.text)) {
+      Fluttertoast.showToast(msg: "Invalid email format.");
+
+      return false;
     }
 
     return true;
