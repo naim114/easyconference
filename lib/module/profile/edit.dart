@@ -335,9 +335,6 @@ class _ProfileEditState extends State<ProfileEdit> {
                   child: TextFormField(
                     decoration: const InputDecoration(labelText: 'Institute'),
                     controller: instituteController,
-                    inputFormatters: <TextInputFormatter>[
-                      FilteringTextInputFormatter.digitsOnly
-                    ],
                   ),
                 ),
                 // Role
